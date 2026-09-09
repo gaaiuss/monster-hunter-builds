@@ -1,54 +1,33 @@
 # ============================
-# Reference Project: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
-#
-# Install python-dotenv
-#
-# Os pontos de atenção estão comentados próximo das chaves, aqui só coloquei um
-# lembrete.
-#
-# Atenção: As versões do Python devem ser consistentes entre:
+# Warning: Python version must be consistant between:
 #   - project.requires-python
 #   - tool.ruff.target-version
 #   - tool.pyright.pythonVersion
 #
-# Atenção: O nome do pacote principal deve ser consistente entre:
+# Warning: Package name must be consistant between:
 #   - project.scripts
 #   - tool.ruff.lint.isort.known-first-party
-#   - A pasta dentro de 'djangoapp/'
+#   - The folder inside 'src/'
 # ============================
 [project]
-name = "monster_hunter_builds"
+name = "mh-builds"
 version = "0.0.1"
-description = "monster_hunter_builds"
+description = "mh-builds"
 readme = "README.md"
 license = "MIT"
 authors = [{ name = "gaaiuss", email = "caio.gui.castro@gmail.com" }]
 requires-python = ">=3.14"
 dependencies = [
-    "django>=6.0.3",
-    "django-axes>=8.3.1",
-    "django-summernote>=0.8.20.0",
-    "django-types>=0.23.0",
-    "pillow>=12.1.1",
-    "psycopg2-binary>=2.9.11",
+    "django>=6.1.1",
     "python-dotenv>=1.1.0",
-    "types-pillow>=10.2.0.20240822",
+    "rich>=15.0.0",
 ]
-
 
 [project.optional-dependencies]
 dev = ["ruff", "pyright", "pytest", "pytest-xdist"]
 
-[project.scripts]
-# Define os comandos de console. A chave ('monster_hunter_builds') é o comando.
-# O valor aponta para 'nome_do_pacote.nome_do_modulo:nome_da_funcao'.
-# Ex: 'my_package.main:run' -> src/my_package/main.py (e a função run lá dentro).
-# Lembre-se de sincronizar o nome do pacote com 'known-first-party' do Ruff.
-# monster_hunter_builds = "my_package.my_module:run_from_script"
-
-
 # ============================
-# Lint e formatação (Ruff)
+# Linting and auto format (Ruff)
 # ============================
 [tool.ruff]
 line-length = 88
@@ -59,43 +38,10 @@ indent-width = 4
 exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
 
 [tool.ruff.lint]
-select = [
-    "ASYNC",
-    "A",
-    "ANN",
-    "B",
-    "BLE",
-    "C4",
-    "C90",
-    "COM",
-    "E",
-    "EM",
-    "ERA",
-    "EXE",
-    "F",
-    "FBT",
-    "FIX",
-    "I",
-    "ICN",
-    "ISC",
-    "Q",
-    "RET",
-    "RSE",
-    "S",
-    "SIM",
-    "SLF",
-    "T10",
-    "T20",
-    "TC",
-    "TD",
-    "TRY",
-    "UP",
-    "W",
-    "YTT",
-    "RUF",
-    "N",
+select = ["ALL"]
+ignore = [
+    "PLC0415", # `import` should be at the top-level of a file
 ]
-ignore = ["T201", "COM812"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["ANN201", "S101"]
@@ -105,49 +51,57 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 
+[tool.ruff.lint.isort]
+# Teaches Ruff what is the main package of the project.
+# It must be the same name of the folder inside the 'src/'.
+known-first-party = ["my_package"]
+
 # ============================
-# Tipagem (Pyright)
+# Typing (Pyright)
 # ============================
 [tool.pyright]
 typeCheckingMode = "strict"
 pythonVersion = "3.14"
-include = ['djangoapp', 'tests']
+include = ["src", 'tests']
 exclude = [
-    '**/.*',
+    "**/.*",
     "**/venv",
     "**/.venv",
     "**/env",
     "**/.env",
     "**/node_modules",
-    "**/__pycache__",
+    "**/__pycache__", 
 ]
 venv = ".venv"
 venvPath = "."
-executionEnvironments = [{ root = "djangoapp" }]
+executionEnvironments = [{ root = "src" }]
+
+# Rules disabled
+# reportMissingTypeStubs = "none" # Missing stubs file
+# reportUnknownMemberType = "none" # Type of parameter partially unknown
 
 # ============================
-# Testes (Pytest)
+# Tests (Pytest)
 # ============================
 [tool.pytest.ini_options]
 addopts = "-s --color=yes --tb=short"
-# Adiciona 'djangoapp' ao path do Python durante os testes. Isso permite que
-# os testes em `tests/` importem os módulos de `djangoapp/` sem erros.
-pythonpath = ["djangoapp"]
+# Add 'src' to Python path during tests. This allows the tests in `tests/` 
+# to import the modules in `src/` without errors.
+pythonpath = ["src"]
 testpaths = ["tests"]
 
-
 # ============================
-# Build e Setuptools
+# Build and Setuptools
 # ============================
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-# Informa ao setuptools para encontrar os pacotes dentro da pasta 'djangoapp'.
-# Essencial para a estrutura de layout com 'djangoapp/'.
-where = ["djangoapp"]
+# Informs setuptools to find the packages inside 'src' folder.
+# Essential for layout structure 'src/'.
+where = ["src"]
 
 [tool.setuptools]
-# Mapeia o diretório raiz de pacotes para 'djangoapp'.
-package-dir = { "" = "djangoapp" }
+# Maps the root folder to 'src'.
+package-dir = { "" = "src" }
