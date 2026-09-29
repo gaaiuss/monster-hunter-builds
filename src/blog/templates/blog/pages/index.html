@@ -14,7 +14,10 @@
         {% else %}
           <div class="not-found center">
             <h1>Nothing found.</h1>
-            <p>I have found nothing related to this link, please, click on another link or go to <a href="{% url 'blog:index' %}">home</a>.</p>
+            <p>
+              I have found nothing related to this link, please, click on 
+              another link or go to <a href="{% url 'blog:index' %}">home</a>.
+            </p>
           </div>
         {% endif %}
 
