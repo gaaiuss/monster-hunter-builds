@@ -19,6 +19,7 @@ authors = [{ name = "gaaiuss", email = "caio.gui.castro@gmail.com" }]
 requires-python = ">=3.14"
 dependencies = [
     "django>=6.1.1",
+    "pillow>=12.3.0",
     "python-dotenv>=1.1.0",
     "rich>=15.0.0",
 ]
@@ -41,8 +42,13 @@ exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
 select = ["ALL"]
 ignore = [
     "PLC0415", # `import` should be at the top-level of a file
-    "D103", # Missing docstring in public function
     "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D105", # Missing docstring in magic method
+    "D106", # Missing docstring in public nested class
+    "CPY001", # Missing copyright notice at top of file
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -79,8 +85,9 @@ venvPath = "."
 executionEnvironments = [{ root = "src" }]
 
 # Rules disabled
-# reportMissingTypeStubs = "none" # Missing stubs file
-# reportUnknownMemberType = "none" # Type of parameter partially unknown
+reportUnknownMemberType = "none" # Type of "LANCZOS" is unknown
+reportUnknownArgumentType = "none" # Argument type is unknown
+reportAttributeAccessIssue = "none" # "LANCZOS" is not a known attribute of module "PIL.Image"
 
 # ============================
 # Tests (Pytest)
