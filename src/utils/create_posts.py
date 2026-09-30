@@ -1,13 +1,13 @@
 import os
 import sys
 from pathlib import Path
-from random import choice
+from random import choice, choices, randint
 
 import django
 from django.conf import settings
 
 DJANGO_BASE_DIR = Path(__file__).parent.parent
-NUMBER_OF_OBJECTS = 1000
+NUMBER_OF_OBJECTS = 100
 
 sys.path.append(str(DJANGO_BASE_DIR))
 os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
@@ -16,14 +16,18 @@ settings.USE_TZ = False
 django.setup()
 
 if __name__ == "__main__":
-    import faker
+    from faker import Faker
+    from faker_file.providers.png_file import PngFileProvider
 
-    from blog.models import Category, Post
+    from blog.models import Category, Post, Tag
 
     Post.objects.all().delete()
     Category.objects.all().delete()
+    Tag.objects.all().delete()
 
-    fake = faker.Faker("en")
+    fake = Faker()
+    fake.add_provider(PngFileProvider)
+
     categories = [
         "Dual Blades",
         "Long Sword",
@@ -40,30 +44,41 @@ if __name__ == "__main__":
         "Charge Blade",
         "Great Sword",
     ]
+    tags = [
+        "Fun",
+        "DPS",
+        "DoT",
+        "Endgame",
+        "Early Game",
+        "Mid Game",
+    ]
 
     django_categories = [Category(name=name) for name in categories]
+    django_tags = [Tag(name=name) for name in tags]
 
     for category in django_categories:
         category.save()
+
+    for tag in django_tags:
+        tag.save()
 
     django_posts: list[Post] = []
 
     for _ in range(NUMBER_OF_OBJECTS):
         title = fake.catch_phrase()
-        short_description = fake.text(max_nb_chars=50)
-        description = fake.text(max_nb_chars=100)
-        created_date = fake.date_this_year()
+        # slug auto
+        excerpt = fake.text(max_nb_chars=50)
+        # is_published auto
+        content = fake.text(max_nb_chars=10000)
+        # cover = fake.png_file()
         category = choice(django_categories)  # noqa: S311
+        tags = choices(django_tags, k=randint(1, 6))  # noqa: S311
 
-        django_posts.append(
-            Post(
-                title=title,
-                short_description=short_description,
-                description=description,
-                created_date=created_date,
-                category=category,
-            ),
+        post = Post(
+            title=title,
+            excerpt=excerpt,
+            content=content,
+            category=category,
         )
-
-    if len(django_posts) > 0:
-        Post.objects.bulk_create(django_posts)
+        post.save()
+        post.tags.set(tags)
