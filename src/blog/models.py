@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING, Any
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.urls import reverse
 
 from utils.images import resize_image
 from utils.rands import slugify_new
@@ -67,7 +66,7 @@ class Post(models.Model):
         help_text="Share your post publicly.",
     )
     content = models.TextField()
-    cover = models.ImageField(upload_to="posts/%Y/%m/", blank=True, default="")
+    cover = models.ImageField(upload_to="posts/%Y/%m/", blank=True, default=None)
     cover_in_post_content = models.BooleanField(
         default=True,
         help_text="Show cover image in post content.",
@@ -111,9 +110,3 @@ class Post(models.Model):
 
         if self.cover and current_cover_name != self.cover.name:
             resize_image(self.cover, 900, 70)
-
-    def get_absolute_url(self) -> str:
-        if not self.is_published:
-            return reverse("blog:index")
-
-        return reverse("blog:post", args=(self.slug,))
