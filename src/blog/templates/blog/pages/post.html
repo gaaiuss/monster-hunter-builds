@@ -18,15 +18,19 @@
       <div class="post-meta pb-base">
 
         <div class="post-meta-item">
-          <a class="post-meta-link" href="{% url 'blog:created_by' post.created_by.pk %}">
+          <a class="post-meta-link" href="#">
             <i class="fa-solid fa-user"></i>
-            <span>
-              {% if post.created_by.first_name %}
-                {{ post.created_by.first_name }} {{ post.created_by.last_name }}
-              {% else %}
-                {{ post.created_by.username }}
-              {% endif %}
-            </span>
+            
+            {% if post.created_by %}
+              <span>
+                {% if post.created_by.first_name %}
+                  {{ post.created_by.first_name }} {{ post.created_by.last_name }}
+                {% else %}
+                  {{ post.created_by.username }}
+                {% endif %}
+              </span>
+            {% endif %}
+              
           </a>
         </div>
 
@@ -43,7 +47,7 @@
           <div class="post-meta-item">
             <a 
               class="post-meta-link" 
-              href="{% url 'blog:category' post.category.slug %}"
+              href="#"
             >
               <i class="fa-solid fa-tag"></i>
               <span>
@@ -70,7 +74,7 @@
           {% if post.tags.exists %}
             
             {% for tag in post.tags.all %}
-              <a class="post-tag-link" href="{% url 'blog:tag' tag.slug %}">
+              <a class="post-tag-link" href="#">
                 <i class="fa-solid fa-link"></i>
                 <span>{{ tag.name }}</span>
               </a>
