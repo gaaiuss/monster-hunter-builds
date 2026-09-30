@@ -19,6 +19,9 @@ authors = [{ name = "gaaiuss", email = "caio.gui.castro@gmail.com" }]
 requires-python = ">=3.14"
 dependencies = [
     "django>=6.1.1",
+    "faker>=40.40.0",
+    "faker-file>=0.19.1",
+    "imgkit>=1.2.3",
     "pillow>=12.3.0",
     "python-dotenv>=1.1.0",
     "rich>=15.0.0",
@@ -49,6 +52,7 @@ ignore = [
     "D105", # Missing docstring in magic method
     "D106", # Missing docstring in public nested class
     "CPY001", # Missing copyright notice at top of file
+    "ERA001", # Found commented-out code
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -88,6 +92,7 @@ executionEnvironments = [{ root = "src" }]
 reportUnknownMemberType = "none" # Type of "LANCZOS" is unknown
 reportUnknownArgumentType = "none" # Argument type is unknown
 reportAttributeAccessIssue = "none" # "LANCZOS" is not a known attribute of module "PIL.Image"
+reportMissingTypeStubs = "none" # Stub file not found for "faker_file.providers.png_file"
 
 # ============================
 # Tests (Pytest)

@@ -44,6 +44,42 @@ wheels = [
 ]
 
 [[package]]
+name = "faker"
+version = "40.40.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/43/7f5870d05331cb1649704040f51332d37f2468ed857de1e226482e2948b0/faker-40.40.0.tar.gz", hash = "sha256:803ee7f920679e7367c3f7b7f97752f5a9780aa5566c71723fbe57d591beafe1", size = 2029985, upload-time = "2026-09-29T00:56:19.983Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/d2/58beb2b8355f89b483fa21b99fe9934ee7312e3ccf228bb7cefe9e8d979c/faker-40.40.0-py3-none-any.whl", hash = "sha256:cd45ebdd1363f92a45740ac49945e49fa18f7e10771884a83c796a235550d7b7", size = 2066663, upload-time = "2026-09-29T00:56:17.952Z" },
+]
+
+[[package]]
+name = "faker-file"
+version = "0.19.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "faker" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/69/93/e35935d50be0fb5faf6ae6fbc0d8ed6e23bdcf91c879b645743fc10c3d81/faker_file-0.19.1.tar.gz", hash = "sha256:e78cbb2b1ce964cae420b49e505c32b90fab3e718955aba334c82df35ba042c6", size = 118867, upload-time = "2026-03-09T00:07:25.121Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f1/09/81a9b4e8f28f60da40295107a801c097961414d3549137ca43b642be18b3/faker_file-0.19.1-py3-none-any.whl", hash = "sha256:47525fcff749987114740decb0a49b056b8d997c0618b6d316427e60bb317db9", size = 175203, upload-time = "2026-03-09T00:07:23.314Z" },
+]
+
+[[package]]
+name = "imgkit"
+version = "1.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/96/66/49089f7ca929e854f4f110259de392ec8bbed5ac3f2f9e1ff493f6623b15/imgkit-1.2.3.tar.gz", hash = "sha256:c9ade93d0281277c898b983c959f11f0cc1cb4a5fed144560dfa4d273fb50cd8", size = 11690, upload-time = "2023-02-23T08:01:58.396Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bf/b0/e0c8aaafb20377eccb9aedbb9e00c21aeaac9cdc13d31d1c7532e1241bab/imgkit-1.2.3-py3-none-any.whl", hash = "sha256:cba8e3f67da6e0a5c87345a8b41605337851f9b9b75719500fa6810ecff84791", size = 10634, upload-time = "2023-02-23T08:01:57.223Z" },
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -79,6 +115,9 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
+    { name = "faker" },
+    { name = "faker-file" },
+    { name = "imgkit" },
     { name = "pillow" },
     { name = "python-dotenv" },
     { name = "rich" },
@@ -95,6 +134,9 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = ">=6.1.1" },
+    { name = "faker", specifier = ">=40.40.0" },
+    { name = "faker-file", specifier = ">=0.19.1" },
+    { name = "imgkit", specifier = ">=1.2.3" },
     { name = "pillow", specifier = ">=12.3.0" },
     { name = "pyright", marker = "extra == 'dev'" },
     { name = "pytest", marker = "extra == 'dev'" },
@@ -278,6 +320,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5e/e5/9e274e24eeb027640ffc7442f21239f16d17f47acec15ae34f32e03a5c79/ruff-0.16.6-py3-none-win32.whl", hash = "sha256:0b87d9d16fcb63e8018423ca1d50b7260f15cb2da33e30db4baad4183a948c25", size = 10049212, upload-time = "2026-09-03T16:57:20.55Z" },
     { url = "https://files.pythonhosted.org/packages/22/31/72472449414223ed1a2da236b992adbb1a2ae59e34794574810f60ce068e/ruff-0.16.6-py3-none-win_amd64.whl", hash = "sha256:10d21c51c3495d8eaea7b703a16592117ea6eb1d649e36335aa965ff1173eb39", size = 10556402, upload-time = "2026-09-03T16:57:23.501Z" },
     { url = "https://files.pythonhosted.org/packages/fc/07/d781f8f8e1ac24bef9f3269cf62ffb1407ca24c3a8f12e5e22874f90528c/ruff-0.16.6-py3-none-win_arm64.whl", hash = "sha256:7a976c79b958f94e50a022a19f0f8c87387448020935ec14fc74331bd0a7f2c5", size = 10412850, upload-time = "2026-09-03T16:57:26.416Z" },
+]
+
+[[package]]
+name = "six"
+version = "1.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
 ]
 
 [[package]]
