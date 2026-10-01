@@ -69,7 +69,7 @@ if __name__ == "__main__":
         # slug auto
         excerpt = fake.text(max_nb_chars=50)
         # is_published auto
-        content = fake.text(max_nb_chars=10000)
+        content = fake.text(max_nb_chars=5000)
         # cover = fake.png_file()
         category = choice(django_categories)  # noqa: S311
         tags = choices(django_tags, k=randint(1, 6))  # noqa: S311
